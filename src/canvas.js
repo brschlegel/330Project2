@@ -11,8 +11,8 @@ import * as utils from './utils.js';
 import * as classes from './classes.js';
 
 let ctx, canvasWidth, canvasHeight, gradient, analyserNode, audioData;
-let totalDepth = 4;
-let numFractals = 3;
+let totalDepth =3;
+let numFractals = 16;
 let audioDataEndPoints = [];
 let allFractals = [];
 let colorByDepth = [];
@@ -20,9 +20,11 @@ colorByDepth[0] = "#6699ff";
 colorByDepth[1] = "#3366ff";
 colorByDepth[2] = "#3333ff";
 colorByDepth[3] = "#000066";
+colorByDepth[4] = "#000066";
+colorByDepth[5] = "#000066";
+colorByDepth[6] = "#000066";
 
-
-function setupCanvas(canvasElement, analyserNodeRef) {
+function setupCanvas(canvasElement, analyserNodeRef, numFractals, totalDepth) {
     // create drawing context
     ctx = canvasElement.getContext("2d");
     canvasWidth = canvasElement.width;
@@ -38,7 +40,7 @@ function setupCanvas(canvasElement, analyserNodeRef) {
     ctx.fillStyle = "black";
     //drawCarpet(100, 100, 200, 200, 0);
 
-    setUpShapeFractal(ArrangeCarpet, 3, 100,100,200,200 );
+    setUpShapeFractal(ArrangeCarpet, numFractals, 100,100,200,200 );
     for(let i = 0; i < numFractals; i++){
         audioDataEndPoints.push(Math.round(i * 128 / numFractals));
     }
@@ -59,6 +61,7 @@ function draw(params = {}) {
      ctx.fillRect(0,0,canvasWidth,canvasHeight);
      ctx.restore();
      
+     console.log(allFractals.length)
     for(let i = 0; i < allFractals.length; i++){
         drawFractal(audioData, allFractals[i],audioDataEndPoints[i], audioDataEndPoints[i+1]);
     }
@@ -170,7 +173,7 @@ function ArrangeCarpet(x, y, width, height, depth, squares){
     squares[depth].push(new classes.Square(x + .333333 * width, y + .33333333 * height, .333333 * width, .33333333 * height, colorByDepth[depth]));
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if(!(i == 1 && j == 1) && depth < 3){
+            if(!(i == 1 && j == 1) && depth < totalDepth){
                ArrangeCarpet(x + .333333 * width * i, y + .33333333 * height * j, .333333 * width, .33333333 * height, depth + 1, squares);
             }
         }
@@ -181,9 +184,9 @@ function ArrangeCarpet(x, y, width, height, depth, squares){
 function drawFractal(audioData, array,start,end){
     //let value = utils.averageArrayValues(audioData, 0, Math.floor(audioData.length / 3));
     let value = audioData[start]
-    let numDepth = Math.round(value / 64);
-    if(numDepth > 4){
-        numDepth = 4;
+    let numDepth = Math.round(value / (256 / totalDepth));
+    if(numDepth > totalDepth){
+        numDepth = totalDepth;
     }
     for(let i =0; i < numDepth; i++){
         for(let j = 0; j < array[i].length; j++)
@@ -198,7 +201,9 @@ function setUpShapeFractal(arrangeFunction, num, x,y,width,height){
     for(let i = 0; i < num; i++){
         let arr = [];
         console.log(arr);
-        arrangeFunction(x + i * 200,y,width,height,0,arr);
+        let width = canvasWidth / (num + 1)
+        let spacing = width / (num + 1)
+        arrangeFunction( spacing + i * (width + spacing),(canvasHeight / 2) - (width /2),width,width,0,arr);
         allFractals.push(arr);
     }
 

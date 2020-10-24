@@ -31,7 +31,7 @@ function init() {
     console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
     let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
     setupUI(canvasElement);
-    canvas.setupCanvas(canvasElement, audio.analyserNode);
+    canvas.setupCanvas(canvasElement, audio.analyserNode, 3,3);
     loop();
 }
 
@@ -64,6 +64,8 @@ function setupUI(canvasElement) {
     //C - hookup volume slider & label
     let volumeSlider = document.querySelector("#volumeSlider");
     let volumeLabel = document.querySelector("#volumeLabel");
+    let depthSlider = document.querySelector("#depthSlider");
+    let numSlider = document.querySelector("#numSlider");
 
     //add ,oninput event to slider
     volumeSlider.oninput = e => {
@@ -72,6 +74,16 @@ function setupUI(canvasElement) {
         //update value of label 
         volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
     };
+
+    // depthSlider.onchange = e => {
+        
+    //     canvas.setupCanvas(canvasElement, audio.analyserNode, e.target.value,numSlider.value);
+    // }
+
+    // numSlider.onchange = e => {
+    //     canvas.setupCanvas(canvasElement, audio.analyserNode,depthSlider.value,e.target.value);
+    // }
+
 
     //set value of label to match initial value of slider
     volumeSlider.dispatchEvent(new Event("input"));
@@ -86,36 +98,36 @@ function setupUI(canvasElement) {
         }
     };
 
-    let circleCB =  document.querySelector("#circlesCB");
-     circleCB.onchange = e => {
-        drawParams.showCircles = circleCB.checked;
-    }
+    // let circleCB =  document.querySelector("#circlesCB");
+    //  circleCB.onchange = e => {
+    //     drawParams.showCircles = circleCB.checked;
+    // }
 
-    let barCB = document.querySelector("#barsCB");
-    barCB.onchange = e => {
-        drawParams.showBars = barCB.checked;
-    }
+    // let barCB = document.querySelector("#barsCB");
+    // barCB.onchange = e => {
+    //     drawParams.showBars = barCB.checked;
+    // }
 
-    let gradientCB = document.querySelector("#gradientCB");
-    gradientCB.onchange = e => {
-        drawParams.showGradient = !drawParams.showGradient
-    }
+    // let gradientCB = document.querySelector("#gradientCB");
+    // gradientCB.onchange = e => {
+    //     drawParams.showGradient = !drawParams.showGradient
+    // }
 
-    let noiseCB = document.querySelector("#noiseCB");
-    noiseCB.onchange  = e =>{
-        drawParams.showNoise = !drawParams.showNoise;
-    }
+    // let noiseCB = document.querySelector("#noiseCB");
+    // noiseCB.onchange  = e =>{
+    //     drawParams.showNoise = !drawParams.showNoise;
+    // }
 
-    let invertCB = document.querySelector("#invertCB");
-    invertCB.onchange  = e =>{
-        drawParams.showInvert = !drawParams.showInvert;
-    }
+    // let invertCB = document.querySelector("#invertCB");
+    // invertCB.onchange  = e =>{
+    //     drawParams.showInvert = !drawParams.showInvert;
+    // }
     
-    let embossCB = document.querySelector("#embossCB");
-    embossCB.onchange  = e =>{
-        console.log("bro")
-        drawParams.showEmboss = !drawParams.showEmboss;
-    }
+    // let embossCB = document.querySelector("#embossCB");
+    // embossCB.onchange  = e =>{
+    //     console.log("bro")
+    //     drawParams.showEmboss = !drawParams.showEmboss;
+    // }
 
 } // end setupUI
 
