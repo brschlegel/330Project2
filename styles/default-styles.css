@@ -40,3 +40,19 @@ button[data-playing="no"]:after{
   font-size: 1.2rem;
   width: 8rem;
 }
+
+#title{
+  font-family: 'Oswald', sans-serif;
+}
+
+#volumeSlider{
+  width: 40%;
+}
+
+#depthSlider{
+  width: 40%;
+}
+
+#numSlider{
+  width: 40%;
+}

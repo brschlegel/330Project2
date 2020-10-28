@@ -2,20 +2,24 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Audio Visualizer</title>
+	<title>Fractal Audio Visualizer</title>
 	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
 	<script src="./src/loader.js" type="module"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@517&display=swap" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
+<h1 id = "title">Fractal Audio Visualizer</h1>
 <main>
 	<canvas width="800" height="400"></canvas>
 	<div id="controls">
 		<section>
-			<button id="playButton" data-playing="no"></button>
-			<button id="fsButton">Full Screen</button>
+			<button id="playButton" data-playing="no" class="btn btn-primary"></button>
+			<button id="fsButton" class="btn btn-secondary">Full Screen</button>
 		
 			<label>Track: 
-				<select id="trackSelect">
+				<select id="trackSelect" class = "btn btn-secondary dropdown-toggle">
 					<option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
 					<option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
 					<option value="media/The Picard Song.mp3">The Picard Song</option>
@@ -24,14 +28,34 @@
 		</section>
 		
 		<section>
-			Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
+			
+			Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01" class = "slider">
 			<span id="volumeLabel">???</span>
-			<!-- Fractal Depth:  <input type="range" id="depthSlider" min="1" max="6" value="3" step="1">
-			Number of Fractals:  <input type="range" id="numSlider" min="1" max="16" value="3" step="1"> -->
+			
 		</section>
 
 		<section>
+			Fractal Depth:  <input type="range" id="depthSlider" min="1" max="4" value="3" step="1" class = "slider">
+			<span id="depthLabel">3</span>
 			
+		  </section>
+		  <section>
+			Number of Fractals:  <input type="range" id="numSlider" min="1" max="16" value="3" step="1" class = "slider">
+			<span id="numLabel">3</span>
+		  </section>
+		  <section>
+			  Color 1: <input type="color" id="colorpicker1" value="#6699ff">
+			  Color 2: <input type ="color" id="colorpicker2" value="#3366ff">
+			  Color 3: <input type="color" id="colorpicker3" value= "#3333ff">
+			  Color 4: <input type ="color" id="colorpicker4" value= "#000066">
+		  </section>
+		  <section>
+			  Lowshelf Filter (Useful for seeing full depth of lower fractals): <input type="checkbox" id = "lowShelf">
+		  </section>
+		  <section>
+			  Gradient Fractals: <input type = "checkbox" id="showGradient">
+			  InvertColors: <input type="checkbox" id="invertCB">
+
 		  </section>
 	</div>
 </main>

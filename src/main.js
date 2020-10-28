@@ -3,7 +3,7 @@ import * as utils from './utils.js';
 import * as canvas from './canvas.js';
 
 const drawParams = {
-    showGradient: true,
+    showGradient: false,
     showBars: true,
     showCircles: true,
     showNoise: true,
@@ -31,7 +31,7 @@ function init() {
     console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
     let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
     setupUI(canvasElement);
-    canvas.setupCanvas(canvasElement, audio.analyserNode, 3,3);
+    canvas.setupCanvas(canvasElement, audio.analyserNode, 3, 3);
     loop();
 }
 
@@ -65,7 +65,14 @@ function setupUI(canvasElement) {
     let volumeSlider = document.querySelector("#volumeSlider");
     let volumeLabel = document.querySelector("#volumeLabel");
     let depthSlider = document.querySelector("#depthSlider");
+    let depthLabel = document.querySelector('#depthLabel');
     let numSlider = document.querySelector("#numSlider");
+    let numLabel = document.querySelector('#numLabel');
+    let colorPicker1 = document.querySelector("#colorpicker1");
+    let colorPicker2 = document.querySelector("#colorpicker2");
+    let colorPicker3 = document.querySelector("#colorpicker3");
+    let colorPicker4 = document.querySelector("#colorpicker4");
+
 
     //add ,oninput event to slider
     volumeSlider.oninput = e => {
@@ -75,16 +82,33 @@ function setupUI(canvasElement) {
         volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
     };
 
-    // depthSlider.onchange = e => {
-        
-    //     canvas.setupCanvas(canvasElement, audio.analyserNode, e.target.value,numSlider.value);
-    // }
+    depthSlider.onchange = e => {
+        depthLabel.innerHTML = e.target.value;
+        canvas.changeDepth(e.target.value);
+    }
 
-    // numSlider.onchange = e => {
-    //     canvas.setupCanvas(canvasElement, audio.analyserNode,depthSlider.value,e.target.value);
-    // }
+    numSlider.onchange = e => {
+        numLabel.innerHTML = e.target.value;
+        canvas.changeNumFractal(e.target.value);
+    }
 
+    colorPicker1.onchange = e =>{
+        canvas.setColor(e.target.value, 0)
+    }
+    colorPicker2.onchange = e =>{
+        canvas.setColor(e.target.value, 1)
+    }
+    colorPicker3.onchange = e =>{
+        canvas.setColor(e.target.value, 2)
+    }
+    colorPicker4.onchange = e =>{
+        canvas.setColor(e.target.value, 3)
+    }
 
+    document.querySelector('#lowShelf').onchange = e => {
+      
+        audio.toggleLowshelf(e.target.checked); // turn on or turn off the filter, depending on the value of `highshelf`!
+    }
     //set value of label to match initial value of slider
     volumeSlider.dispatchEvent(new Event("input"));
 
@@ -108,21 +132,21 @@ function setupUI(canvasElement) {
     //     drawParams.showBars = barCB.checked;
     // }
 
-    // let gradientCB = document.querySelector("#gradientCB");
-    // gradientCB.onchange = e => {
-    //     drawParams.showGradient = !drawParams.showGradient
-    // }
+     let gradientCB = document.querySelector("#showGradient");
+     gradientCB.onchange = e => {
+         drawParams.showGradient = !drawParams.showGradient
+     }
 
     // let noiseCB = document.querySelector("#noiseCB");
     // noiseCB.onchange  = e =>{
     //     drawParams.showNoise = !drawParams.showNoise;
     // }
 
-    // let invertCB = document.querySelector("#invertCB");
-    // invertCB.onchange  = e =>{
-    //     drawParams.showInvert = !drawParams.showInvert;
-    // }
-    
+     let invertCB = document.querySelector("#invertCB");
+     invertCB.onchange  = e =>{
+         drawParams.showInvert = !drawParams.showInvert;
+     }
+
     // let embossCB = document.querySelector("#embossCB");
     // embossCB.onchange  = e =>{
     //     console.log("bro")
